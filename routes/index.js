@@ -15,4 +15,6 @@ router.get("/",homeController.home);
 // if this url doesnot math then use users router;
 router.use("/users", require("./user"));
 
+router.use("/posts",require("./posts"))
+
 module.exports = router;
