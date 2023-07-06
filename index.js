@@ -4,6 +4,7 @@ const express = require("express");
 const port = 8000; // on production level port No- 80 is used.
 
 const app = express();
+const db = require("./config/mongoose");
 
 // setting views engine and views folder;
 app.set("view engine", "ejs");
