@@ -7,6 +7,10 @@ const app = express();
 const db = require("./config/mongoose");
 const cookieParser = require("cookie-parser");
 
+const Session = require("express-session");
+const passport = require("passport");
+const PassportLocalStrategy = require("./config/passport-local-strategy");
+
 // setting views engine and views folder;
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname,"/views"));
@@ -23,8 +27,22 @@ app.use(express.urlencoded({extended : true}));
 
 app.use(cookieParser());
 
+// setting session configuration
 
-// adding express.router . This is a middleware which starts before the start of server!!
+app.use(Session({
+    name : "getTogether",
+    secret : "blahomething",//todo later
+    saveUninitialized : false,
+    resave : false,
+    cookie : {
+        maxAge : (1000 * 60 * 100) // mili secs
+    }
+}))
+
+app.use(passport.initialize())
+app.use(passport.session());
+
+// adding express.router . This is a middleware which starts before the start of server!
 
 app.use("/",require("./routes/index"));
 

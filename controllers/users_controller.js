@@ -47,3 +47,7 @@ module.exports.signIn = function(req,res){
         title : "getTogether | SignIn"
     });
 };
+
+module.exports.authenticate = function(req,res){
+    return res.redirect("/");
+}
