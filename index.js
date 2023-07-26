@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const Session = require("express-session");
 const passport = require("passport");
 const PassportLocalStrategy = require("./config/passport-local-strategy");
+const MongoStore = require("connect-mongo");
 
 // setting views engine and views folder;
 app.set("view engine", "ejs");
@@ -36,7 +37,13 @@ app.use(Session({
     resave : false,
     cookie : {
         maxAge : (1000 * 60 * 100) // mili secs
-    }
+    },
+    store : MongoStore.create({
+        mongoUrl : "mongodb://127.0.0.1/Social_media_website",
+        autoRemove : "disabled",
+    }, function(err){   // callback function in case of error
+        console.log(err || "connect-mongodb setup ok");
+    })
 }))
 
 app.use(passport.initialize())

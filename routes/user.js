@@ -18,5 +18,7 @@ router.post("/authenticate",passport.authenticate(
     {failureRedirect : "/users/sign-in"}
 ),userController.authenticate); // goes to homepage on successfull authentication
 
+router.get("/sign-out",userController.destroySession);
+
 
 module.exports = router;

@@ -61,3 +61,13 @@ module.exports.signIn = function(req,res){
 module.exports.authenticate = function(req,res){
     return res.redirect("/");
 }
+
+module.exports.destroySession = function(req,res){
+    req.logout(req.user, (err) => {
+        if(err){
+            console.log("Error Occured : ",err)
+        }else{
+            return res.redirect("/");
+        }
+    })
+}

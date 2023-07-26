@@ -6,6 +6,7 @@
     <title><%= title%></title>
 </head>
 <body>
+    <%- include("./header.ejs") -%>
     <h1>Sign In</h1>
     <form action="./authenticate" method="post">
         <input type="email" name="email" placeholder="Enter Your Email" required>
