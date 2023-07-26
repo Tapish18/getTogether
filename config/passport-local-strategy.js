@@ -4,7 +4,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user");
 // Authenticating using passport Local Strategy
 passport.use(new LocalStrategy({
-    usernameField : "email"       // This tells passwort that email in login form will be treated as username for the authentication;
+    usernameField : "email"       // This tells passport that email in login form will be treated as username for the authentication;
 },function (email,password,done){
     User.findOne({email : email}).then((user) => {
         if(!user || password != user.password){
@@ -12,7 +12,7 @@ passport.use(new LocalStrategy({
             return done(null,false);
         }
 
-        return done(null,user);
+        return done(null,user); // This user is returned to the req
     }).catch((err) => {
         console.log("error in finding user --> passport");
         return done(err);
@@ -36,6 +36,37 @@ passport.deserializeUser(function(id, done){
         return done(error);
     })
 })
+
+
+// making generalized middlewares
+
+passport.checkAuthentication = function (req,res,next){
+    // if user is signed in 
+    if(req.isAuthenticated()){
+        return next();
+    }
+
+    // if user is not signed in 
+
+    return res.redirect("/users/sign-in");
+}
+
+passport.setAuthenticatedUser = function (req,res,next){
+    if(req.isAuthenticated()){
+        // Transferring the current signed in user to res.locals for views , can be accessed like user.name etc
+        res.locals.user = req.user;
+        
+    }
+    return next();
+}
+
+// passport.isNotAuthenticated = function(req,res,next){
+//     if(!req.isAuthenticated()){
+//         return next();
+//     }
+
+//     return res.redirect("back");
+// }
 
 
 // Now export the Passport Library
