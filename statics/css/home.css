@@ -1,4 +1,7 @@
 body{
+    width: 100%;
+    height: auto;
+    min-height: 100%;
     margin-left: 0;
     margin-top: -15px;
 }
