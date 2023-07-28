@@ -1,9 +1,13 @@
+<head>
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+
 <header>
-    <h1>
+    <h1 id="website-name">
         getTogether | Pave Your Way of Effective Networking
     </h1>
 
-    <ul>
+    <ul id="links-list">
         <% if (locals.user){%>
             <li>
                 <a href="/users/profile"><%= user.name%></a>

@@ -1,0 +1,33 @@
+footer{
+    height: 150px;
+    width: 100%;
+    /* display: flex; */
+    background-color: rgb(151, 157, 162);
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.container{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+
+#craftedby{
+    display: inline;
+    height: 40px;
+    font-size: 30px;
+    width: 10%;
+    font-weight: 700;
+}
+
+#info{
+    text-align: center;
+}
+
+#year{
+    text-align: center;
+}
