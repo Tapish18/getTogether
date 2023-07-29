@@ -12,9 +12,10 @@ console.log("router loaded");
 
 router.get("/",homeController.home);
 
-// if this url doesnot math then use users router;
+// if this url doesnot match then use users router;
 router.use("/users", require("./user"));
 
-router.use("/posts",require("./posts"))
+router.use("/posts",require("./posts"));
+router.use("/comment",require("./comments"));
 
 module.exports = router;

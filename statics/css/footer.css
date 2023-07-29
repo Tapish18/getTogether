@@ -4,7 +4,7 @@ footer{
     /* display: flex; */
     background-color: rgb(151, 157, 162);
     color: white;
-    position: absolute;
+    position: relative;
     left: 0;
     bottom: 0;
 }

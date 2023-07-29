@@ -28,18 +28,38 @@
     <% } %>
 
     <% if(locals.posts){ %>
-        <h2>News Feed</h2>
-        <ul>
-            <% for(let post of posts){ %>
-                <li>
-                    <%= post.content %>
-                </li>
-                <small>
-                    <%= post.user.name%>
-                </small>
-
-            <% } %>
-        </ul>
+        <div id="post-container">
+            <h2>News Feed</h2>
+            <ul>
+                <% for(let post of posts){ %>
+                    <li>
+                        <%= post.content %>
+                    </li>
+                    <small>
+                        <%= post.user.name%>
+                    </small>
+                    <div class="comment-form">
+                        <form action="/comment/create" method="post">
+                            <input type="text" name="content" placeholder="Type Your Comment Here...">
+                            <input type="hidden" name="post" value= <%= post._id%>>
+                            <input type="submit" value="Add Comment">
+                        </form>
+                    </div>
+                    <br>
+    
+                    <!-- <% if(post.comment){ %>
+                        <ul>
+                            <% for(let cmt of post.comment){%>
+                                <li>
+                                    <%= cmt%>
+                                </li>
+                            <%} %>
+                        </ul>
+                    <%} %> -->
+    
+                <% } %>
+            </ul>
+        </div>
     <%} %>
 
 
