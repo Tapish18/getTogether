@@ -26,7 +26,7 @@ passport.serializeUser(function(user,done){
 });
 
 
-// After the info about user's identity is passed on to the passport , we are required to decentrailize it for further use. it's args are id (which it decrypts itself) and the done callback function
+// After the info about user's identity is passed on to the passport , we are required to deserialize it for further use. it's args are id (which it decrypts itself) and the done callback function
 
 passport.deserializeUser(function(id, done){
     User.findById(id).then((user) => {

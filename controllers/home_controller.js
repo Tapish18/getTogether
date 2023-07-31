@@ -7,25 +7,55 @@ module.exports.home = function(req,res){
     // res.cookie("user_id",50);
 
 
-    if (req.user){
-        Post.find({}).populate("user").then((fetchedPosts) => {
-            if(fetchedPosts){
-                return res.render("home",{
-                    title : "getTogether",
-                    posts : fetchedPosts
-                });
+    // if (req.user){
+    //     Post.find({}).populate("user").populate({
+    //         path : "comment",
+    //         populate : {
+    //             path : "user",
+    //         }
+    //     }
+    //     ).then((fetchedPosts) => {
+    //         if(fetchedPosts){
+    //             return res.render("home",{
+    //                 title : "getTogether",
+    //                 posts : fetchedPosts
+    //             });
     
-            }else{
-                return res.render("home",{
-                    title : "getTogether",
-                });
-            }
-        })
-    }else{
-        return res.render("home",{
-            title : "getTogether",
-        });
+    //         }else{
+    //             return res.render("home",{
+    //                 title : "getTogether",
+    //             });
+    //         }
+    //     })
+    // }else{
+    //     return res.render("home",{
+    //         title : "getTogether",
+    //     });
+    // }
+
+    Post.find({}).populate("user").populate({
+        path : "comment",
+        populate : {
+            path : "user",
+        }
     }
+    ).then((fetchedPosts) => {
+        if(fetchedPosts){
+            return res.render("home",{
+                title : "getTogether",
+                posts : fetchedPosts
+            });
+
+        }else{
+            return res.render("home",{
+                title : "getTogether",
+            });
+        }
+    }).catch((err) => {
+        console.log("Error in finding posts : ",err);
+    })
+
+    
 
     
     

@@ -7,7 +7,7 @@ module.exports.create = function (req,res){
         if(fetchedPost){
             Comment.create({
                 content : req.body.content,
-                user : req.user,
+                user : req.user._id,
                 post : req.body.post
             }).then((createdComment) => {
                 console.log("Comment added Successfully.")
@@ -31,5 +31,43 @@ module.exports.create = function (req,res){
     }).catch((err) => {
         console.log("Error Occurred in Finding Post : ",err);
         return res.redirect("back");
+    })
+}
+
+module.exports.destroy = function(req,res){
+    Comment.findById(req.params.id).then((fetchedComment) => {
+        if(fetchedComment){
+            if(fetchedComment.user == req.user.id){
+                const postId = fetchedComment.post;
+                fetchedComment.deleteOne().then(() => {
+                    console.log(`${fetchedComment.content} comment deleted successfully!`);
+                }).catch((err) => {
+                    console.log("Error in deleting Comment : ",err);
+                });
+
+                Post.findById(postId).then((fetchedPost) => {
+                    if(fetchedPost){
+                        const commentids = fetchedPost.comment;
+                        const newcommentids = commentids.filter((item) => {
+                            return item != fetchedComment._id;
+                        })
+
+                        fetchedPost.comment = newcommentids;
+                        fetchedPost.save()
+                    }
+                }).catch((err) => {
+                    console.log("Error in fetching post : ",err);
+                });
+            }else{
+                console.log("Not Authorized to delete this comment");
+            }
+
+            
+        }else{
+            console.log("No such comment exists!");
+        }
+        return res.redirect("back");
+    }).catch((err) => {
+        console.log("Error in fetching Comment : ",err);
     })
 }
