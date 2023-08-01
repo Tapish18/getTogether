@@ -70,9 +70,12 @@
                                                 By : 
                                                 <%= cmt.user.name %>
                                             </small>
-                                            <% if(locals.user.id == cmt.user.id) { %>
-                                                <a href="/comment/destroy/<%= cmt._id%>">Delete Comment</a>
+                                            <% if(locals.user) { %>
+                                                <% if(locals.user.id == cmt.user.id || locals.user.id == post.user.id) { %>
+                                                    <a href="/comment/destroy?post_id=<%= post.user._id%>&cmt_id=<%= cmt._id%>">Delete Comment</a>
+                                                <% } %>
                                             <% } %>
+                                            
                                             
                                         </li>
                                     </p>

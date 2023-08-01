@@ -35,9 +35,14 @@ module.exports.create = function (req,res){
 }
 
 module.exports.destroy = function(req,res){
-    Comment.findById(req.params.id).then((fetchedComment) => {
+    const cId = req.query.cmt_id;
+    const pId = req.query.post_id;
+
+    // console.log(pId);
+    // console.log(req.user.id );
+    Comment.findById(cId).then((fetchedComment) => {
         if(fetchedComment){
-            if(fetchedComment.user == req.user.id){
+            if(pId == req.user.id || fetchedComment.user == req.user.id){   // This Gives authorization to creater of the POST and the Creater of the Comment to Delete the Comment.
                 const postId = fetchedComment.post;
                 fetchedComment.deleteOne().then(() => {
                     console.log(`${fetchedComment.content} comment deleted successfully!`);
