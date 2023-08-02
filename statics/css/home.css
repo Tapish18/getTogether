@@ -14,4 +14,31 @@ body{
     flex-direction: column;
 }
 
+.sub-page-container{
+    width: 100%;
+    height: inherit;
+    display: flex;
+    flex-direction: row;
+}
+
+#interaction-section{
+    /* position: absolute;
+    left: 35%; */
+    display: inline-block;
+    width: 70%;
+    height: inherit;
+    padding: 10px;
+
+}
+
+#user-friends{
+    display: inline-block;
+    padding: 10px;
+    /* position: absolute;
+    right: 0%; */
+    width: 30%;
+    height: auto;
+    min-height: 100vh;
+    border-left: 1px solid lightgrey;
+}
 

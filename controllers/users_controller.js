@@ -2,9 +2,13 @@ const User = require("../models/user");
 
 module.exports.profile = function (req,res){
     // return res.end("<h1>Users Profile Page!!</h1>")
-    return res.render("profile.ejs",{
-        title : "getTogether | My Profile",
+    User.findById(req.params.id).then((fetchedUser) => {
+        return res.render("profile.ejs",{
+            title : "getTogether | My Profile",
+            profile_user : fetchedUser
+        })
     })
+
 };
 
 module.exports.create = function(req,res){
@@ -70,4 +74,20 @@ module.exports.destroySession = function(req,res){
             return res.redirect("/");
         }
     })
+}
+
+
+module.exports.update = function (req,res){
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id , req.body).then((updatedUser) => {
+            console.log("Updated user Succesfully!");
+            console.log(req.body);
+        }).catch((err) => {
+            console.log("Unable to Update User Fields : ",err);
+        })
+        
+    }else{
+        console.log("User Not Authorized to Update!");
+    }
+    return res.redirect("back");
 }

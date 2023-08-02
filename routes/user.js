@@ -5,10 +5,11 @@ const router = express.Router();
 const passport = require("passport");
 
 
+router.get("/profile/:id",passport.checkAuthentication,userController.profile);
+router.post("/update/:id",passport.checkAuthentication,userController.update);
 
-router.get("/profile",passport.checkAuthentication,userController.profile);
 router.get("/sign-up",userController.signUp);
-// router.get("/sign-in",passport.isNotAuthenticated,userController.signIn); when using iNotAuthenticated custom function as a middleware!!
+// router.get("/sign-in",passport.isNotAuthenticated,userController.signIn); when using isNotAuthenticated custom function as a middleware!!
 router.get("/sign-in",userController.signIn);
 router.post("/create",userController.create);
 
@@ -19,6 +20,8 @@ router.post("/authenticate",passport.authenticate(
 ),userController.authenticate); // goes to homepage on successfull authentication
 
 router.get("/sign-out",userController.destroySession);
+
+
 
 
 module.exports = router;
