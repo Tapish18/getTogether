@@ -12,6 +12,9 @@ const passport = require("passport");
 const PassportLocalStrategy = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongo");
 
+const flash = require("connect-flash");
+const customMWare = require("./config/middleware");
+
 // setting views engine and views folder;
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname,"/views"));
@@ -35,6 +38,7 @@ app.use(Session({
     secret : "blahomething",//todo later
     saveUninitialized : false,
     resave : false,
+    cookie: { secure: false },
     cookie : {
         maxAge : (1000 * 60 * 100) // mili secs
     },
@@ -49,6 +53,9 @@ app.use(Session({
 app.use(passport.initialize())
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customMWare.setFlash);
 
 // adding express.router . This is a middleware which starts before the start of server!
 

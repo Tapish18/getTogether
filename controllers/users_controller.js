@@ -63,6 +63,7 @@ module.exports.signIn = function(req,res){
 };
 
 module.exports.authenticate = function(req,res){
+    req.flash("success","Logged In Successfully"); // This saves flash msg with key success as an array into the session cookie
     return res.redirect("/");
 }
 
@@ -71,6 +72,7 @@ module.exports.destroySession = function(req,res){
         if(err){
             console.log("Error Occured : ",err)
         }else{
+            req.flash("success","Logged Out Successfully");
             return res.redirect("/");
         }
     })

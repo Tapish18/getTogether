@@ -1,67 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="/css/header.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+        integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"
+        integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     <link rel="stylesheet" href="/css/home.css">
-    <title><%= title%></title>
+    <title>
+        <%= title%>
+    </title>
 
 </head>
+
 <body>
     <div class="page-container">
         <%- include("./header.ejs") -%>
-        <!-- <h1>
+
+            <% if(flash.success && flash.length> 0) { %>
+                <h1>
+                    Hello
+                </h1>
+                <h2>
+                    <%= flash.success[0] %>
+                </h2>
+                <% } %>
+
+                    <!-- <h1>
             Welcome to my Social Networking Website!!
         </h1> -->
-        <div class="sub-page-container">
-            <section id="interaction-section">
-    
-                
-            
-                <% if(locals.user){ %>
-                    <h4>
-                        Posts
-                    </h4>
-                
-                    <section id="feed-news">
-                        <form action="/posts/createpost" id="post-form" method="post">
-                            <textarea name="content" cols="30" rows="3" placeholder="Type Here" required></textarea>
-                            <input type="submit" value="Post">
-                        </form>
-                    </section>
-                <% } %>
-            
-                <% if(locals.posts){ %>
-                    <div id="post-container">
-                        <h2>News Feed</h2>
-                        <ul>
-                            <% for(let post of posts){ %>
-                                <%- include('./_post.ejs' , {post : post}) -%>
-                            <% } %>
-                        </ul>
+                    <div class="sub-page-container">
+                        <section id="interaction-section">
+
+
+
+                            <% if(locals.user){ %>
+                                <h4>
+                                    Posts
+                                </h4>
+
+                                <section id="feed-news">
+                                    <form action="/posts/createpost" id="post-form" method="post">
+                                        <textarea name="content" cols="30" rows="3" placeholder="Type Here"
+                                            required></textarea>
+                                        <input type="submit" value="Post">
+                                    </form>
+                                </section>
+                                <% } %>
+
+                                    <% if(locals.posts){ %>
+                                        <div id="post-container">
+                                            <h2>News Feed</h2>
+                                            <ul>
+                                                <% for(let post of posts){ %>
+                                                    <%- include('./_post.ejs' , {post : post}) -%>
+                                                <% } %>
+                                            </ul>
+                                        </div>
+                                        <%} %>
+                        </section>
+
+                        <section id="user-friends">
+                            <h4>
+                                Friends
+                            </h4>
+                            <ul>
+                                <% for(let f of friends) { %>
+                                    <li>
+                                        <a href="/users/profile/<%= f.id %>">
+                                            <%= f.name %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                        </section>
                     </div>
-                <%} %>
-            </section>
-    
-            <section id="user-friends">
-                <h4>
-                    Friends
-                </h4>
-                <ul>
-                    <% for(let f of friends) { %>
-                        <li>
-                            <a href="/users/profile/<%= f.id %>">
-                                <%= f.name %>
-                            </a>
-                        </li>
-                    <% } %>
-                </ul>
-            </section>
-        </div>
     </div>
 
 
     <%- include("./footer.ejs") -%>
+
+
+        <script>
+            new Noty({
+                text: "Notification text",
+                theme: "relax",
+                type: "success",
+                timeout: 1500,
+                layout: "topRight"
+
+            }).show();
+        </script>
+        <script src="/js/home.js"></script>
 </body>
+
 </html>

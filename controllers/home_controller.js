@@ -4,6 +4,7 @@ const User = require("../models/user")
 
 module.exports.home = async function(req,res){
     console.log(req.cookies);
+    // console.log(req.flash("success"));
     // res.cookie("user_id",50);
 
 
@@ -34,7 +35,7 @@ module.exports.home = async function(req,res){
     // }
 
     try {
-        let fetchedPosts = await Post.find({}).populate("user").populate({
+        let fetchedPosts = await Post.find({}).sort("-createdAt").populate("user").populate({
             path : "comment",
             populate : {
                 path : "user",
