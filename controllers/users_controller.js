@@ -63,7 +63,11 @@ module.exports.signIn = function(req,res){
 };
 
 module.exports.authenticate = function(req,res){
+    console.log("Flash Called");
     req.flash("success","Logged In Successfully"); // This saves flash msg with key success as an array into the session cookie
+    // console.log(req.session);
+    // console.log(req.flash("success"));
+    // console.log(req.session);
     return res.redirect("/");
 }
 

@@ -4,6 +4,8 @@ const User = require("../models/user")
 
 module.exports.home = async function(req,res){
     console.log(req.cookies);
+    // console.log("From Home");
+    // console.log(req.session);
     // console.log(req.flash("success"));
     // res.cookie("user_id",50);
 

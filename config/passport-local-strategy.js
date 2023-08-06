@@ -4,10 +4,12 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user");
 // Authenticating using passport Local Strategy
 passport.use(new LocalStrategy({
-    usernameField : "email"       // This tells passport that email in login form will be treated as username for the authentication;
-},function (email,password,done){
+    usernameField : "email" ,      // This tells passport that email in login form will be treated as username for the authentication;
+    passReqToCallback: true
+},function (req,email,password,done){
     User.findOne({email : email}).then((user) => {
         if(!user || password != user.password){
+            req.flash("success","Invalid Username/Password")
             console.log("Invalid Username/Password");
             return done(null,false);
         }

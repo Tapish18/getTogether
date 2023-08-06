@@ -1,6 +1,7 @@
 const exp = require("constants");
 const path = require("path");
 const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
 const port = 8000; // on production level port No- 80 is used.
 
 const app = express();
@@ -16,8 +17,12 @@ const flash = require("connect-flash");
 const customMWare = require("./config/middleware");
 
 // setting views engine and views folder;
+
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname,"/views"));
+
+app.use(expressLayouts);
+
 
 //setting statics folder;
 
@@ -38,7 +43,7 @@ app.use(Session({
     secret : "blahomething",//todo later
     saveUninitialized : false,
     resave : false,
-    cookie: { secure: false },
+    // cookie: { secure: false },
     cookie : {
         maxAge : (1000 * 60 * 100) // mili secs
     },
@@ -56,6 +61,9 @@ app.use(passport.setAuthenticatedUser);
 
 app.use(flash());
 app.use(customMWare.setFlash);
+
+
+
 
 // adding express.router . This is a middleware which starts before the start of server!
 

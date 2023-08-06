@@ -1,23 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title%></title>
-    <!-- <link rel="stylesheet" href="/css/header.css"> -->
-    <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/page-container.css">
 </head>
 <body>
-    <div class="page-container">
-        <%- include("./header.ejs") -%>
-        <h1>Sign In</h1>
-        <form action="./authenticate" method="post">
-            <input type="email" name="email" placeholder="Enter Your Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" value="Sign In">
-        </form>
-    </div>
-    <%- include('./footer.ejs') -%>
+    <h1>Sign In</h1>
+    <form action="./authenticate" method="post">
+        <input type="email" name="email" placeholder="Enter Your Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" value="Sign In">
+    </form>
 </body>
-</html>
