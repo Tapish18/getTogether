@@ -9,7 +9,7 @@ passport.use(new LocalStrategy({
 },function (req,email,password,done){
     User.findOne({email : email}).then((user) => {
         if(!user || password != user.password){
-            req.flash("success","Invalid Username/Password")
+            req.flash("error","Invalid Username/Password")
             console.log("Invalid Username/Password");
             return done(null,false);
         }

@@ -27,7 +27,7 @@
                         <% if(locals.posts){ %>
                             <div id="post-container">
                                 <h2>News Feed</h2>
-                                <ul>
+                                <ul id="latest-feed">
                                     <% for(let post of posts){ %>
                                         <%- include('./_post.ejs' , {post : post}) -%>
                                             <% } %>

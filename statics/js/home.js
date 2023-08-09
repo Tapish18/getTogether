@@ -13,11 +13,27 @@
                 data : postForm.serialize(),
                 success : function(data){
                     // console.log(data);
+                    console.log(data.message)
+                    if(data.message){
+                        console.log("inner func called");
+                        new Noty({
+                            text : data.message,
+                            type : "success",
+                            theme : "relax",
+                            timeout: 1500,
+                            layout: "topRight"
+                        }).show()
+                            
+                    }
                     let newPost = newPostDOM(data.data.post,data.data.creater);
                     let postsUl = $("#post-container>ul");
                     postsUl.prepend(newPost);
+                    postForm[0][0]["value"] = "";
                     let deletePostBtn = $(" .delete-post-button", newPost);
                     deletePost(deletePostBtn);
+
+                    let cmtform = $("#latest-feed>li form")[0];
+                    createComment(cmtform);
                 },
                 error : function(error){
                     console.log(error.responseText);
@@ -76,6 +92,16 @@
                 type : "get",
                 url : $(deleteLink).prop("href"),
                 success : function(data){
+                    if(data.message){
+                        console.log("inner func called");
+                        new Noty({
+                            text : data.message,
+                            type : "success",
+                            theme : "relax",
+                            timeout: 1500,
+                            layout: "topRight"
+                        }).show();
+                    }
                     let post_id = data.data.post_id;
                     $(`#post-${post_id}`).remove();
                     console.log(data.message);
@@ -86,6 +112,118 @@
             })
         })
     }
+
+    let deleteButtonsList = $(".delete-post-button");
+
+    for (let a of deleteButtonsList){
+        deletePost(a);
+    }
+
+
+    // Ajax requests for comments
+
+    let createComment = function(addCommentLink){
+        console.log("createdComment Called");
+        $(addCommentLink).submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                type : "post",
+                url : "/comment/create",
+                data : $(addCommentLink).serialize(),
+                success : function(data){
+                    let myNewComment = createCommentDOM(data.data.newComment,data.data.commentCreater,data.data.postCreator);
+                    let desiredPostCommentSection = $(`#post-comments-${data.data.newComment.post}`);
+                    deleteComment($(myNewComment).find(".delete-comment-button"));
+                    desiredPostCommentSection.prepend(myNewComment);
+                    $(addCommentLink)[0][0]["value"] = "";
+
+                    
+
+                    if(data.message){
+                        new Noty({
+                            type : "success",
+                            theme : "relax",
+                            text : data.message,
+                            layout : "topRight",
+                            timeout : 1500
+                        }).show();
+                    }
+                    
+                },
+                error : function(err){
+                    console.log("Error Occurred : ",err);
+                }
+            })
+        })
+    }
+
+
+    const createCommentDOM = function(createdcmt , cmtMaker,postCreator){
+        return `
+        <p>
+        <li>
+            ${createdcmt.content} &nbsp;
+            <small>
+                By : 
+                ${cmtMaker}
+            </small>
+            <a class= "delete-comment-button" href="/comment/destroy?post_id=${postCreator}&cmt_id=${createdcmt._id}">Delete Comment</a>
+            
+            
+        </li>
+        </p>`
+    }
+
+    // delete Comment
+
+    let deleteComment = function(deleteCommentLink){
+        $(deleteCommentLink).click(function(event){
+            event.preventDefault();
+            $.ajax({
+                type : "get",
+                url : $(deleteCommentLink).prop("href"),
+                success : function(data){
+                    let myCommentId = data.data.cmt_id
+                    let desiredComment = $(`#comment-${myCommentId}`);
+                    $(desiredComment).remove();
+
+                    if(data.message){
+                        new Noty({
+                            type: "success",
+                            theme : "relax",
+                            text : data.message,
+                            layout : "topRight",
+                            timeout : 1500
+                        }).show()
+                    }
+                },
+                error : function(error){
+                    console.log("Error Occurred : ",error);
+                }
+            })
+        })
+    }
+
+
+    let deteteCommentLinksInDOM = $(".delete-comment-button")
+
+    for (let btn of deteteCommentLinksInDOM){
+        deleteComment(btn);
+    }
+
+
+
+
+    let addCommentForms = $(".comment-form form")
+
+    for (let form of addCommentForms){
+        createComment(form);
+    }
+
+
+
+
+
 
     createPost();
 }

@@ -20,6 +20,7 @@ module.exports.createPost = async function (req, res) {
         })
 
         if(req.xhr){
+            // req.flash("success","Post Created");
             return res.status(200).json({
                 data : {
                     post : post,
@@ -74,7 +75,7 @@ module.exports.destroy = async function (req, res) {
                         data : {
                             post_id : req.params.id
                         },
-                        message : "Post Deleted Successfully"
+                        message : "Post Deleted"
                     });
                 }
 

@@ -13,6 +13,7 @@ module.exports.profile = function (req,res){
 
 module.exports.create = function(req,res){
     if(req.body.password != req.body.ConfirmPassword){
+        req.flash("error","Incorrect Password Match");
         return res.redirect("back");
     }
 
@@ -24,7 +25,8 @@ module.exports.create = function(req,res){
                     email : req.body.email,
                     password : req.body.password
                 }).then((createdUser) => {
-                    console.log("User Created!!!");
+                    // console.log("User Created!!!");
+                    req.flash("success","User Created Successfully")
                     console.log(createdUser);
                     return res.redirect("back");
                 }).catch((error) => {
@@ -32,6 +34,7 @@ module.exports.create = function(req,res){
                 })
             }else{
                 console.log("Username already exists!!");
+                req.flash("error","Username Already Exists")
                 return res.redirect("back");
             }
         }
@@ -86,7 +89,8 @@ module.exports.destroySession = function(req,res){
 module.exports.update = function (req,res){
     if(req.user.id == req.params.id){
         User.findByIdAndUpdate(req.params.id , req.body).then((updatedUser) => {
-            console.log("Updated user Succesfully!");
+            console.log("Updated user Successfully!");
+            req.flash("success","User Updated Successfully");
             console.log(req.body);
         }).catch((err) => {
             console.log("Unable to Update User Fields : ",err);
@@ -94,6 +98,7 @@ module.exports.update = function (req,res){
         
     }else{
         console.log("User Not Authorized to Update!");
+        req.flash("error","User Not Authorized to Update");
     }
     return res.redirect("back");
 }
