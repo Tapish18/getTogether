@@ -27,6 +27,7 @@ app.use(expressLayouts);
 //setting statics folder;
 
 app.use(express.static("statics"));
+app.use("/uploads",express.static(path.join(__dirname + "/uploads")));
 
 //add urlencoder middleware to app
 

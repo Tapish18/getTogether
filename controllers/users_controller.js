@@ -1,4 +1,6 @@
+const fs = require("fs");
 const User = require("../models/user");
+const path = require("path");
 
 module.exports.profile = function (req,res){
     // return res.end("<h1>Users Profile Page!!</h1>")
@@ -86,19 +88,71 @@ module.exports.destroySession = function(req,res){
 }
 
 
-module.exports.update = function (req,res){
+module.exports.update = async function (req,res){
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id , req.body).then((updatedUser) => {
-            console.log("Updated user Successfully!");
-            req.flash("success","User Updated Successfully");
-            console.log(req.body);
-        }).catch((err) => {
+        try{
+            let fetchedUser = await User.findById(req.params.id);
+
+            User.uploadAvatar(req,res,function(err){
+                if(err){
+                    console.log("Multer Error : ",err);
+                }
+
+                fetchedUser.name = req.body.name
+                fetchedUser.email = req.body.email
+
+                if(req.file){
+                    if(fetchedUser.avatar){
+                        let deletePath = path.join(__dirname,"../",fetchedUser.avatar)
+                        if(fs.existsSync(deletePath)){
+                            fs.unlinkSync(deletePath, function(err){
+                                if(err){
+                                    console.log("Error in Deleting prev file : ",err);
+                                }else{
+                                    console.log("File Deleted Successfully");
+                                }
+                                
+                            })
+                        }else{
+                            // If control comes to this block means the avatar has been deleted mannually from local storage
+                            fetchedUser.avatar = User.avatarPath + "/" + req.file.filename
+                        }
+                        
+                    }
+                    fetchedUser.avatar = User.avatarPath + "/" + req.file.filename
+                }
+
+                fetchedUser.save();
+            });
+
+
+
+
+        }catch(error){
+            req.flash("error",error);
             console.log("Unable to Update User Fields : ",err);
-        })
-        
+        }
+
+        return res.redirect("back");
+
+
     }else{
         console.log("User Not Authorized to Update!");
-        req.flash("error","User Not Authorized to Update");
+         req.flash("error","User Not Authorized to Update");
     }
-    return res.redirect("back");
+
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id , req.body).then((updatedUser) => {
+    //         console.log("Updated user Successfully!");
+    //         req.flash("success","User Updated Successfully");
+    //         console.log(req.body);
+    //     }).catch((err) => {
+    //         console.log("Unable to Update User Fields : ",err);
+    //     })
+        
+    // }else{
+    //     console.log("User Not Authorized to Update!");
+    //     req.flash("error","User Not Authorized to Update");
+    // }
+    // return res.redirect("back");
 }
