@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const exp = require("constants");
 const path = require("path");
 const express = require("express");
@@ -11,6 +13,7 @@ const cookieParser = require("cookie-parser");
 const Session = require("express-session");
 const passport = require("passport");
 const PassportLocalStrategy = require("./config/passport-local-strategy");
+const PassportJWT = require("./config/passportJWT");
 const MongoStore = require("connect-mongo");
 
 const flash = require("connect-flash");
