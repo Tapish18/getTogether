@@ -1,0 +1,25 @@
+#sign-in-container{
+    position: absolute;
+    left: 35%;
+    width: 30%;
+    min-width: 400px;
+    height: 50%;
+    border: 1px solid skyblue;
+}
+
+#sign-in-form{
+    text-align: center;
+}
+
+.improve-border{
+    border-top : none;
+    border-left: none;
+    border-right : none;
+    border-radius: none;
+    
+
+}
+
+#sign-in-container input{
+    width: 75%;
+}

@@ -7,13 +7,10 @@
 
 <body>
         <div class="sub-page-container">
-            <section id="interaction-section">
-
-
-
+            <section id="AddPost">
                 <% if(locals.user){ %>
                     <h4>
-                        Posts
+                        Write Up Your Mind
                     </h4>
 
                     <section id="feed-news">
@@ -22,7 +19,20 @@
                             <input type="submit" value="Post">
                         </form>
                     </section>
-                    <% } %>
+                <% }else { %>
+                    <h4>
+                        Sign In to Post
+                    </h4>
+                <% } %>
+            </section>
+
+
+
+            <section id="interaction-section">
+
+
+
+                
 
                         <% if(locals.posts){ %>
                             <div id="post-container">

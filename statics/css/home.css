@@ -21,11 +21,19 @@ body{
     flex-direction: row;
 }
 
+#AddPost{
+    display: inline-block;
+    width: 35%;
+    height: inherit;
+    padding: 10px;
+    border-right: 1px solid lightgrey;
+}
+
 #interaction-section{
     /* position: absolute;
     left: 35%; */
     display: inline-block;
-    width: 70%;
+    width: 40%;
     height: inherit;
     padding: 10px;
 
@@ -36,7 +44,7 @@ body{
     padding: 10px;
     /* position: absolute;
     right: 0%; */
-    width: 30%;
+    width: 25%;
     height: auto;
     min-height: 100vh;
     border-left: 1px solid lightgrey;

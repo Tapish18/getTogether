@@ -1,5 +1,5 @@
 footer{
-    height: 150px;
+    height: 175px;
     width: 100%;
     /* display: flex; */
     background-color: rgb(151, 157, 162);
@@ -9,25 +9,32 @@ footer{
     bottom: 0;
 }
 
-.container{
+/* .container{
     position: absolute;
     top: 40%;
+    left: 40%;
+} */
+
+.myFooter{
+    position: absolute;
+    text-align: center;
+    padding-top: 2.75%;
+    height: 100%;
+    width: 20%;
     left: 40%;
 }
 
 
 #craftedby{
-    display: inline;
-    height: 40px;
-    font-size: 30px;
-    width: 10%;
+    margin-bottom: 5px;
+    font-size: 1.22em;
     font-weight: 700;
 }
 
-#info{
+/* #info{
     text-align: center;
 }
 
 #year{
     text-align: center;
-}
+} */
