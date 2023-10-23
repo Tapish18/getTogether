@@ -6,7 +6,7 @@ const User = require("../models/user");
 const opts = {}
 opts.jwtFromRequest = extractJWT.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.SECRET;
-console.log(opts)
+// console.log(opts)
 
 passport.use(new passportStrategy(opts, async function(payLoadJWT,done){
     try{
