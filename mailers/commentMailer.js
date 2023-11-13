@@ -2,21 +2,23 @@ const nodemailer = require("../config/nodemailer")
 
 
 
-exports.newComment = (commenterEmail) => {
-    console.log(commenterEmail)
+exports.newComment = (commenterEmail,comment,user) => {
+    // console.log(commenterEmail)
+
+    let htmlString = nodemailer.renderTemplate({comment : comment,user : user}, "/comments/new_comments.ejs")
 
     nodemailer.transporter.sendMail({
         from : process.env.USER + "@gmail.com",
         to : commenterEmail,
         subject : "New Comment Added",
-        html : "<h1>Yeah, Your Comment has been Published on getTogether</h1>"
+        html : htmlString
     }, (err,info) => {
         if(err){
             console.log("Error Occurred : ",err);
             return
         }
 
-        console.log("Mesage Sent",info);
+        console.log("Message Sent",info);
         return 
     })
 
